@@ -1,0 +1,46 @@
+use omni_ast::{Mod, Stmt, Ident, Int};
+
+grammar;
+
+pub mod: Mod = {
+	
+
+}
+
+
+keyword = {
+	"service",
+	"resource"
+}
+
+stmt: Stmt = {
+	<kw:keyword> <name:ident> block
+}
+
+blok = {
+
+}
+
+ident: Ident = {
+    r"[a-zA-Z][a-zA-Z0-9]*"
+}
+
+number: Int = {
+    r"[0-9]+"
+}
+
+string: String = {
+    r#""[^"]*""#
+}
+
+Comma<T>: Vec<T> = {
+    <mut v:(<T> ",")*> <e:T?> => match e {
+        None => v,
+        Some(e) => {
+            v.push(e);
+            v
+        }
+    }
+};
+
+

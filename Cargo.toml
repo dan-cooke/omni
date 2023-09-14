@@ -1,15 +1,12 @@
-[package]
-name = "omni"
-version = "0.1.0"
-edition = "2021"
-
-
 [workspace]
 members = [
-	"crates/omni-parser"
+	"crates/omni-parser",
+	"crates/omni-ast"
 ]
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
-[dependencies]
+
+[workspace.dependencies]
+nextest = "0.0.0"
+
 
 
