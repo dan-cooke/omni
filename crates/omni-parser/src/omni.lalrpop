@@ -1,4 +1,4 @@
-use omni_ast::{Mod, Def, Ident, Int, Prop, Value};
+use omni_ast::{File, Def, Ident, Int, Prop, Value};
 
 
 use crate::tokens::Token;
@@ -9,39 +9,58 @@ use lalrpop_util::ParseError;
 
 grammar;
 
-pub Mod: Mod = {
-	<stmts: stmt*> => Mod::Module { body: stmts },
+pub OmniFile: File = {
+	<defs: Def*> => File { imports: None, body: defs }
 }
 
-stmt: Def = {
-	"service" <id:"identifier"> <body:struct> =>? match body {
-		Value::Object(props) => Ok(Def::ServiceDef { id, body: props }),
-		_ =>  Err(ParseError::User { error: LexicalError::InvalidToken(String::from("Expected struct definition"))}),
-	},
 
-	"resource" <id:"identifier"> <body:struct> =>? match body {
-		Value::Object(props) => Ok(Def::ResourceDef { id, body: props }),
-		_ =>  Err(ParseError::User { error: LexicalError::InvalidToken(String::from("Expected struct definition"))}),
-	},
-	"operation" <id:"identifier"> <body:struct> =>? match body {
-		Value::Object(props) => Ok(Def::OperationDef { id, body: props }),
-		_ =>  Err(ParseError::User { error: LexicalError::InvalidToken(String::from("Expected struct definition"))}),
-	}
+
+KwResourceChildDef = {
+	"operation",
+	"create",
+	"read",
+	"update",
+	"delete",
+	"put",
 }
 
-struct: Value = {
-	"{"<props: Comma<prop>>"}" => Value::Object(<>),
-}
-prop: Prop = {
-	<id:"identifier">":"<val: value> => Prop { id, value: val }
+Def: Def = {
+	"service" <id:Ident> "{" <body: Comma<Prop>> "}" => 
+		Def::Service {
+			id,
+			body: vec![],
+		},
+
 }
 
-value: Value = {
-	"identifier" => Value::Identifier(<>),
+ResourceChildDef: Def = {
+	<kw: KwResourceChildDef> <id: Ident> 
+	"for" <resource: NestedIdents>
+	<extends: Extends?>
+	"{" <body: Comma<Prop>> "}" 
+	=> Def::Service{ id, body: vec![]}
+
+
+}
+
+Extends: Ident = {
+	"extends" <id: Ident> => id
+}
+
+Map: Value = {
+	"{"<props: Comma<Prop>>"}" => Value::Map(<>),
+}
+
+Prop: Prop = {
+	<key:"identifier">":"<val: Value> => Prop { key, value: val, decorators: None }
+}
+
+Value: Value = {
+	Ident => Value::Identifier(<>),
 	"int" => Value::Integer(<>),
 	"str" => Value::String(<>),
-	"["<vals: Comma<value>>"]" => Value::Array(vals),
-	struct,
+	"["<vals: Comma<Value>>"]" => Value::Array(vals),
+	Map,
 }
 
 
@@ -56,6 +75,20 @@ Comma<T>: Vec<T> = {
     }
 };
 
+NestedIdents: Vec<Ident> = {
+  <id:Ident> <rest:(">" <Ident>)*> => {
+    let mut idents = vec![id];
+    for ident in rest {
+      idents.push(ident);
+    }
+    idents
+  }
+};
+
+Ident: Ident = {
+    <id: "identifier"> => Ident { id }
+};
+
 
 
 extern {
@@ -66,6 +99,17 @@ extern {
 		"service" => Token::KwService,
 		"resource" => Token::KwResource,
 		"operation" => Token::KwOperation,
+		"import" => Token::KwImport,
+		"from" => Token::KwFrom,
+		"extends" => Token::KwExtends,
+		"for" => Token::KwFor,
+		"create" => Token::KwCreate,
+		"read" => Token::KwRead,
+		"delete" => Token::KwDelete,
+		"update" => Token::KwUpdate,
+		"list" => Token::KwList,
+		"put" => Token::KwPut,
+		">" => Token::Arrow,
 		"{" => Token::LBrace,
 		"}" => Token::RBrace,
 		"[" => Token::LBracket,
@@ -73,7 +117,9 @@ extern {
 		":" => Token::Colon,
 		"," => Token::Comma,
 		"," => Token::Comma,
-		"@" => Tokenn::At,
+		"@" => Token::At,
+		"-" => Token::Dash,
+		"$" => Token::Dollar,
 		"identifier" => Token::Identifier(<String>),
 		"int" => Token::Integer(<i64>),
 		"str" => Token::String(<String>),

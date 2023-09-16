@@ -1,0 +1,13 @@
+// This is the most basic parser test
+// We are defining a simple jokes-service that
+// will return a joke
+
+service JokeService {
+	version: "1.0.0"
+}
+
+read GetJoke for JokeService {
+	output: {
+		joke: String
+	}
+}

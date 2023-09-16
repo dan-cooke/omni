@@ -16,6 +16,35 @@ pub enum Token {
     KwResource,
     #[token("operation")]
     KwOperation,
+    #[token("import")]
+    KwImport,
+    #[token("from")]
+    KwFrom,
+    #[token("extends")]
+    KwExtends,
+    #[token("for")]
+    KwFor,
+    #[token("create")]
+    KwCreate,
+    #[token("read")]
+    KwRead,
+    #[token("update")]
+    KwUpdate,
+    #[token("delete")]
+    KwDelete,
+    #[token("list")]
+    KwList,
+    #[token("put")]
+    KwPut,
+    #[token("struct")]
+    KwStruct,
+
+    #[token("string")]
+    KwString,
+    #[token("int")]
+    KwInt,
+    #[token("float")]
+    KwFloat,
 
     #[token("{")]
     LBrace,
@@ -31,6 +60,12 @@ pub enum Token {
     Comma,
     #[token("@")]
     At,
+    #[token(">")]
+    Arrow,
+    #[token("-")]
+    Dash,
+    #[token("$")]
+    Dollar,
 
     #[regex("[_a-zA-Z][_0-9a-zA-Z]*", |lex| lex.slice().parse())]
     Identifier(String),
