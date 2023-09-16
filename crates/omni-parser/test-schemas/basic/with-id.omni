@@ -1,0 +1,4 @@
+struct WithId {
+	@id
+	id: String
+}

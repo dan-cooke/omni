@@ -1,37 +1,50 @@
-use omni_ast::{Mod, Stmt, Ident, Int};
+use omni_ast::{Mod, Def, Ident, Int, Prop, Value};
+
+
+use crate::tokens::Token;
+use crate::errors::{ LexicalError, Error };
+
+use lalrpop_util::ParseError;
+
 
 grammar;
 
-pub mod: Mod = {
-	
+pub Mod: Mod = {
+	<stmts: stmt*> => Mod::Module { body: stmts },
+}
 
+stmt: Def = {
+	"service" <id:"identifier"> <body:struct> =>? match body {
+		Value::Object(props) => Ok(Def::ServiceDef { id, body: props }),
+		_ =>  Err(ParseError::User { error: LexicalError::InvalidToken(String::from("Expected struct definition"))}),
+	},
+
+	"resource" <id:"identifier"> <body:struct> =>? match body {
+		Value::Object(props) => Ok(Def::ResourceDef { id, body: props }),
+		_ =>  Err(ParseError::User { error: LexicalError::InvalidToken(String::from("Expected struct definition"))}),
+	},
+	"operation" <id:"identifier"> <body:struct> =>? match body {
+		Value::Object(props) => Ok(Def::OperationDef { id, body: props }),
+		_ =>  Err(ParseError::User { error: LexicalError::InvalidToken(String::from("Expected struct definition"))}),
+	}
+}
+
+struct: Value = {
+	"{"<props: Comma<prop>>"}" => Value::Object(<>),
+}
+prop: Prop = {
+	<id:"identifier">":"<val: value> => Prop { id, value: val }
+}
+
+value: Value = {
+	"identifier" => Value::Identifier(<>),
+	"int" => Value::Integer(<>),
+	"str" => Value::String(<>),
+	"["<vals: Comma<value>>"]" => Value::Array(vals),
+	struct,
 }
 
 
-keyword = {
-	"service",
-	"resource"
-}
-
-stmt: Stmt = {
-	<kw:keyword> <name:ident> block
-}
-
-blok = {
-
-}
-
-ident: Ident = {
-    r"[a-zA-Z][a-zA-Z0-9]*"
-}
-
-number: Int = {
-    r"[0-9]+"
-}
-
-string: String = {
-    r#""[^"]*""#
-}
 
 Comma<T>: Vec<T> = {
     <mut v:(<T> ",")*> <e:T?> => match e {
@@ -44,3 +57,25 @@ Comma<T>: Vec<T> = {
 };
 
 
+
+extern {
+	type Location = usize;
+	type Error = LexicalError;
+
+	enum Token {
+		"service" => Token::KwService,
+		"resource" => Token::KwResource,
+		"operation" => Token::KwOperation,
+		"{" => Token::LBrace,
+		"}" => Token::RBrace,
+		"[" => Token::LBracket,
+		"]" => Token::RBracket,
+		":" => Token::Colon,
+		"," => Token::Comma,
+		"," => Token::Comma,
+		"@" => Tokenn::At,
+		"identifier" => Token::Identifier(<String>),
+		"int" => Token::Integer(<i64>),
+		"str" => Token::String(<String>),
+	}
+}

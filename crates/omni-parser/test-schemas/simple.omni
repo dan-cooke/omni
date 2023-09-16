@@ -1,8 +1,0 @@
-service BookService {
-	version: "1.0.0"
-	resources: [
-		BookShop,
-		Book
-	]
-}
-

@@ -1,13 +1,5 @@
-use lalrpop_util::lalrpop_mod;
-
-lalrpop_mod!(pub omni);
-
+mod errors;
 mod lexer;
+pub mod parser;
+mod tokens;
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    pub fn simple_parsing() {}
-}
