@@ -1,4 +1,4 @@
-use omni_ast::{File, Def, Ident, Int, Prop, Value};
+use omni_ast::{File, Def, Ident, Int, ValueDef, TypeDef, Type Value};
 
 
 use crate::tokens::Token;
@@ -25,7 +25,7 @@ KwResourceChildDef = {
 }
 
 Def: Def = {
-	"service" <id:Ident> "{" <body: Comma<Prop>> "}" => 
+	"service" <id:Ident> "{" <body: Comma<ValueDef>> "}" => 
 		Def::Service {
 			id,
 			body: vec![],
