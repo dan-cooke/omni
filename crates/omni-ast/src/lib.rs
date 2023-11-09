@@ -21,42 +21,25 @@ pub enum Def {
         body: Vec<Prop>,
         parents: Option<Vec<Ident>>,
     },
-    Operation {
-        id: Ident,
-        body: Vec<Prop>,
-    },
-    Output {
-        id: Ident,
-        body: Vec<Prop>,
-    },
-    Create {
-        id: Ident,
-        body: Vec<Prop>,
-    },
-    Read {
-        id: Ident,
-        body: Vec<Prop>,
-    },
-    Update {
-        id: Ident,
-        body: Vec<Prop>,
-    },
-    Delete {
-        id: Ident,
-        body: Vec<Prop>,
-    },
-    List {
-        id: Ident,
-        body: Vec<Prop>,
-    },
-    Put {
-        id: Ident,
-        body: Vec<Prop>,
-    },
+    Output(ResourceOperation),
+    Input(ResourceOperation),
+    Create(ResourceOperation),
+    Read(ResourceOperation),
+    Update(ResourceOperation),
+    Delete(ResourceOperation),
+    List(ResourceOperation),
+    Put(ResourceOperation),
     Struct {
         id: Ident,
         body: Vec<Prop>,
     },
+}
+
+#[derive(Debug, PartialEq, Clone)]
+pub struct ResourceOperation {
+    pub id: Ident,
+    pub resource: Ident,
+    pub body: Vec<Prop>,
 }
 
 #[derive(Debug, PartialEq, Clone)]
@@ -69,15 +52,6 @@ pub enum Decorator {
 pub struct Prop {
     pub key: String,
     pub value: Value,
-    pub decorators: Option<Vec<Decorator>>,
-}
-
-pub type TypeDef = Vec<TypeProp>;
-
-#[derive(Debug, PartialEq, Clone)]
-pub struct TypeProp {
-    pub key: String,
-    pub value: Type,
     pub decorators: Option<Vec<Decorator>>,
 }
 

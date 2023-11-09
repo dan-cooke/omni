@@ -15,8 +15,7 @@ pub OmniFile: File = {
 
 
 
-KwResourceChildDef = {
-	"operation",
+KwResourceOperation = {
 	"create",
 	"read",
 	"update",
@@ -33,8 +32,8 @@ Def: Def = {
 
 }
 
-ResourceChildDef: Def = {
-	<kw: KwResourceChildDef> <id: Ident> 
+ResourceOperationDef: Def = {
+	<kw: KwResourceOperation> <id: Ident> 
 	"for" <resource: NestedIdents>
 	<extends: Extends?>
 	"{" <body: Comma<Prop>> "}" 

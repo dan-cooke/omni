@@ -1,0 +1,25 @@
+string String
+
+blob Blob
+
+bigInteger BigInteger
+
+bigDecimal BigDecimal
+
+timestamp Timestamp
+
+document Document
+
+boolean Boolean
+
+byte Byte
+
+short Short
+
+integer Integer
+
+long Long
+
+float Float
+
+double Double
