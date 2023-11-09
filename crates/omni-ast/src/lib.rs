@@ -1,3 +1,4 @@
+pub mod python;
 #[derive(Debug, PartialEq, Clone)]
 pub struct File {
     pub imports: Option<Vec<Import>>,
@@ -14,11 +15,11 @@ pub enum Import {
 pub enum Def {
     Service {
         id: Ident,
-        body: Vec<Prop>,
+        resources: Vec<Ident>,
     },
     Resource {
         id: Ident,
-        body: Vec<Prop>,
+        body: Vec<TypeDef>,
         parents: Option<Vec<Ident>>,
     },
     Output(ResourceOperation),
@@ -31,7 +32,7 @@ pub enum Def {
     Put(ResourceOperation),
     Struct {
         id: Ident,
-        body: Vec<Prop>,
+        body: Vec<ValueDef>,
     },
 }
 
@@ -49,9 +50,16 @@ pub enum Decorator {
 }
 
 #[derive(Debug, PartialEq, Clone)]
-pub struct Prop {
+pub struct ValueDef {
     pub key: String,
     pub value: Value,
+    pub decorators: Option<Vec<Decorator>>,
+}
+
+#[derive(Debug, PartialEq, Clone)]
+pub struct TypeDef {
+    pub key: String,
+    pub value: Type,
     pub decorators: Option<Vec<Decorator>>,
 }
 
@@ -62,7 +70,7 @@ pub enum Value {
     Integer(Int),
     Float(Float),
     Array(Vec<Value>),
-    Map(Vec<Prop>),
+    Map(Vec<ValueDef>),
 }
 
 #[derive(Debug, PartialEq, Clone)]
@@ -80,3 +88,4 @@ pub struct Ident {
 
 pub type Int = i64;
 pub type Float = u64;
+
