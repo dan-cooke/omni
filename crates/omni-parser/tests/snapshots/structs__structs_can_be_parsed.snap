@@ -1,6 +1,5 @@
 ---
 source: crates/omni-parser/tests/structs.rs
-assertion_line: 8
 expression: ast
 ---
 {
@@ -52,6 +51,16 @@ expression: ast
                             "value": {
                               "Literal": {
                                 "Integer": 1234
+                              }
+                            }
+                          },
+                          {
+                            "id": {
+                              "name": "decimal"
+                            },
+                            "value": {
+                              "Literal": {
+                                "Float": 12.23
                               }
                             }
                           }

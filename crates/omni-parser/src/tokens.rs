@@ -66,6 +66,9 @@ pub enum Token {
     #[regex(r#"\d+"#, |lex| lex.slice().parse())]
     Integer(i64),
 
+    #[regex(r#"\d+\.\d+"#, |lex| lex.slice().parse())]
+    Float(f64),
+
     #[regex(r#""[^"]*""#, |lex| lex.slice().parse())]
     String(String),
 }

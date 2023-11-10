@@ -3,7 +3,8 @@ struct MyFirstStruct {
 	nested: {
 		fields: "hello",
 		nested_again: {
-			number: 1234
+			number: 1234,
+			decimal: 12.23
 		},
 	},
 	identifiers: AnotherStruct

@@ -1,6 +1,5 @@
 ---
 source: crates/omni-parser/tests/prelude.rs
-assertion_line: 8
 expression: ast
 ---
 {
