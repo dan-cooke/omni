@@ -68,8 +68,6 @@ pub enum Token {
 
     #[regex(r#""[^"]*""#, |lex| lex.slice().parse())]
     String(String),
-
-    Error,
 }
 
 impl Display for Token {

@@ -4,7 +4,6 @@ use std::{convert::Infallible, num::ParseIntError};
 pub enum LexicalError {
     InvalidToken(String),
     ParseIntError,
-    ParseStringError,
 }
 
 impl Default for LexicalError {
