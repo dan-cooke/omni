@@ -1,67 +1,42 @@
-use omni_ast::{File, Def, Ident, Int, ValueDef, TypeDef, Type Value};
+use crate::ast::*;
 
 
 use crate::tokens::Token;
-use crate::errors::{ LexicalError, Error };
-
-use lalrpop_util::ParseError;
+use crate::errors::{ LexicalError };
 
 
 grammar;
 
-pub OmniFile: File = {
-	<defs: Def*> => File { imports: None, body: defs }
+pub File: File = {
+	<body: Statement*> => File { body }
+}
+
+SimpleType: Type = {
+	"string" => Type::String,
+	"timestamp" => Type::Timestamp,
+	"boolean" => Type::Boolean,
+	"byte" => Type::Byte,
+	"short" => Type::Short,
+	"integer" => Type::Integer,
+	"long" => Type::Long,
+	"float" => Type::Float,
+	"double" => Type::Double,
+}
+
+Statement: Statement = {
+	"struct" <id:Ident> "{" <properties: Comma<Prop>> "}" => Statement::StructDef { id, properties },
+	<_type: SimpleType> <id: Ident> => Statement::SimpleTypeDef { id, _type },
 }
 
 
-
-KwResourceOperation = {
-	"create",
-	"read",
-	"update",
-	"delete",
-	"put",
+Prop: Property = {
+	<id:Ident>":"<value: Expr> => Property { id, value }
 }
 
-Def: Def = {
-	"service" <id:Ident> "{" <body: Comma<ValueDef>> "}" => 
-		Def::Service {
-			id,
-			body: vec![],
-		},
+Expr: Expression = {
+	"{" <properties: Comma<Prop>> "}" => Expression::ObjectExpression { properties }
 
 }
-
-ResourceOperationDef: Def = {
-	<kw: KwResourceOperation> <id: Ident> 
-	"for" <resource: NestedIdents>
-	<extends: Extends?>
-	"{" <body: Comma<Prop>> "}" 
-	=> Def::Service{ id, body: vec![]}
-
-
-}
-
-Extends: Ident = {
-	"extends" <id: Ident> => id
-}
-
-Map: Value = {
-	"{"<props: Comma<Prop>>"}" => Value::Map(<>),
-}
-
-Prop: Prop = {
-	<key:"identifier">":"<val: Value> => Prop { key, value: val, decorators: None }
-}
-
-Value: Value = {
-	Ident => Value::Identifier(<>),
-	"int" => Value::Integer(<>),
-	"str" => Value::String(<>),
-	"["<vals: Comma<Value>>"]" => Value::Array(vals),
-	Map,
-}
-
 
 
 Comma<T>: Vec<T> = {
@@ -74,18 +49,8 @@ Comma<T>: Vec<T> = {
     }
 };
 
-NestedIdents: Vec<Ident> = {
-  <id:Ident> <rest:(">" <Ident>)*> => {
-    let mut idents = vec![id];
-    for ident in rest {
-      idents.push(ident);
-    }
-    idents
-  }
-};
-
-Ident: Ident = {
-    <id: "identifier"> => Ident { id }
+Ident: Identifier = {
+    <name: "identifier"> => Identifier { name }
 };
 
 
@@ -93,34 +58,32 @@ Ident: Ident = {
 extern {
 	type Location = usize;
 	type Error = LexicalError;
-
 	enum Token {
-		"service" => Token::KwService,
-		"resource" => Token::KwResource,
-		"operation" => Token::KwOperation,
-		"import" => Token::KwImport,
-		"from" => Token::KwFrom,
-		"extends" => Token::KwExtends,
-		"for" => Token::KwFor,
-		"create" => Token::KwCreate,
-		"read" => Token::KwRead,
-		"delete" => Token::KwDelete,
-		"update" => Token::KwUpdate,
-		"list" => Token::KwList,
-		"put" => Token::KwPut,
-		">" => Token::Arrow,
-		"{" => Token::LBrace,
-		"}" => Token::RBrace,
-		"[" => Token::LBracket,
-		"]" => Token::RBracket,
-		":" => Token::Colon,
-		"," => Token::Comma,
-		"," => Token::Comma,
-		"@" => Token::At,
-		"-" => Token::Dash,
-		"$" => Token::Dollar,
-		"identifier" => Token::Identifier(<String>),
-		"int" => Token::Integer(<i64>),
-		"str" => Token::String(<String>),
+	    "service" => Token::KwService,
+	    "operation" => Token::KwOperation,
+	    "import" => Token::KwImport,
+	    "from" => Token::KwFrom,
+	    "struct" => Token::KwStruct,
+	    "string" => Token::KwString,
+	    "timestamp" => Token::KwTimestamp,
+	    "boolean" => Token::KwBoolean,
+	    "byte" => Token::KwByte,
+	    "short" => Token::KwShort,
+	    "integer" => Token::KwInt,
+	    "long" => Token::KwLong,
+	    "float" => Token::KwFloat,
+	    "double" => Token::KwDouble,
+	    "{" => Token::LBrace,
+	    "}" => Token::RBrace,
+	    "[" => Token::LBracket,
+	    "]" => Token::RBracket,
+	    ":" => Token::Colon,
+	    "," => Token::Comma,
+	    "@" => Token::At,
+	    "-" => Token::Dash,
+	    "$" => Token::Dollar,
+	    "identifier" => Token::Identifier(<String>),
+	    "int" => Token::Integer(<i64>),
+	    "str" => Token::String(<String>),
 	}
 }

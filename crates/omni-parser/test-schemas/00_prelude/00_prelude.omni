@@ -1,14 +1,6 @@
 string String
 
-blob Blob
-
-bigInteger BigInteger
-
-bigDecimal BigDecimal
-
 timestamp Timestamp
-
-document Document
 
 boolean Boolean
 

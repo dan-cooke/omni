@@ -7,13 +7,6 @@ pub enum LexicalError {
     ParseStringError,
 }
 
-#[derive(Debug, PartialEq, Clone)]
-pub enum Error {
-    InvalidDefinition(String),
-    DuplicateDefinition(String),
-    UndefinedDefinition(String),
-}
-
 impl Default for LexicalError {
     fn default() -> Self {
         Self::InvalidToken("".to_string())

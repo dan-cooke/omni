@@ -1,7 +1,6 @@
 [workspace]
 members = [
 	"crates/omni-parser",
-	"crates/omni-ast"
 ]
 
 
