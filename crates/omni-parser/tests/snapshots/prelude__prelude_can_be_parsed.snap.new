@@ -1,0 +1,81 @@
+---
+source: crates/omni-parser/tests/prelude.rs
+assertion_line: 8
+expression: ast
+---
+{
+  "body": [
+    {
+      "SimpleTypeDef": {
+        "id": {
+          "name": "String"
+        },
+        "_type": "String"
+      }
+    },
+    {
+      "SimpleTypeDef": {
+        "id": {
+          "name": "Timestamp"
+        },
+        "_type": "Timestamp"
+      }
+    },
+    {
+      "SimpleTypeDef": {
+        "id": {
+          "name": "Boolean"
+        },
+        "_type": "Boolean"
+      }
+    },
+    {
+      "SimpleTypeDef": {
+        "id": {
+          "name": "Byte"
+        },
+        "_type": "Byte"
+      }
+    },
+    {
+      "SimpleTypeDef": {
+        "id": {
+          "name": "Short"
+        },
+        "_type": "Short"
+      }
+    },
+    {
+      "SimpleTypeDef": {
+        "id": {
+          "name": "Integer"
+        },
+        "_type": "Integer"
+      }
+    },
+    {
+      "SimpleTypeDef": {
+        "id": {
+          "name": "Long"
+        },
+        "_type": "Long"
+      }
+    },
+    {
+      "SimpleTypeDef": {
+        "id": {
+          "name": "Float"
+        },
+        "_type": "Float"
+      }
+    },
+    {
+      "SimpleTypeDef": {
+        "id": {
+          "name": "Double"
+        },
+        "_type": "Double"
+      }
+    }
+  ]
+}
