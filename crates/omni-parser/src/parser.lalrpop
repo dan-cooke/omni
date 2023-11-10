@@ -33,9 +33,15 @@ Prop: Property = {
 	<id:Ident>":"<value: Expr> => Property { id, value }
 }
 
-Expr: Expression = {
-	"{" <properties: Comma<Prop>> "}" => Expression::ObjectExpression { properties }
+Ident: Identifier = {
+	<name: "identifier"> => Identifier { name }
+}
 
+Expr: Expression = {
+	"{" <properties: Comma<Prop>> "}" => Expression::ObjectExpression { properties },
+	<name: "identifier"> => Expression::Identifier{ name },
+	"literal_int" => Expression::Literal(Literal::Integer(<>)),
+	"literal_string" => Expression::Literal(Literal::String(<>)),
 }
 
 
@@ -49,9 +55,6 @@ Comma<T>: Vec<T> = {
     }
 };
 
-Ident: Identifier = {
-    <name: "identifier"> => Identifier { name }
-};
 
 
 
@@ -83,7 +86,7 @@ extern {
 	    "-" => Token::Dash,
 	    "$" => Token::Dollar,
 	    "identifier" => Token::Identifier(<String>),
-	    "int" => Token::Integer(<i64>),
-	    "str" => Token::String(<String>),
+	    "literal_int" => Token::Integer(<i64>),
+	    "literal_string" => Token::String(<String>),
 	}
 }

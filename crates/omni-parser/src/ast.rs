@@ -1,9 +1,11 @@
-#[derive(Debug, PartialEq)]
+use serde::{Deserialize, Serialize};
+
+#[derive(Debug, PartialEq, Serialize, Deserialize)]
 pub struct File {
     pub body: Vec<Statement>,
 }
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Serialize, Deserialize)]
 pub enum Statement {
     StructDef {
         id: Identifier,
@@ -15,7 +17,7 @@ pub enum Statement {
     },
 }
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Serialize, Deserialize)]
 pub enum Type {
     String,
     Timestamp,
@@ -28,29 +30,29 @@ pub enum Type {
     Double,
 }
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Serialize, Deserialize)]
 pub struct Property {
     pub id: Identifier,
     pub value: Expression,
 }
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Serialize, Deserialize)]
 pub enum Expression {
     Literal(Literal),
-    Identifier(Identifier),
+    Identifier { name: String },
     ObjectExpression { properties: Vec<Property> },
 }
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Serialize, Deserialize)]
 pub enum Literal {
     String(String),
     Integer(i64),
-    Float(i64),
+    Float(f64),
     Boolean(bool),
     Null,
 }
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Serialize, Deserialize)]
 pub struct Identifier {
     pub name: String,
 }

@@ -1,0 +1,14 @@
+struct MyFirstStruct {
+	foo: "bar",
+	nested: {
+		fields: "hello",
+		nested_again: {
+			number: 1234
+		},
+	},
+	identifiers: AnotherStruct
+}
+
+struct AnotherStruct {
+	id: "hello"
+}
