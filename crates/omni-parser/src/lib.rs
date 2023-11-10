@@ -1,5 +1,8 @@
 mod ast;
 mod errors;
 mod lexer;
-pub mod parser;
+mod parser;
 mod tokens;
+
+pub use ast::*;
+pub use parser::*;
