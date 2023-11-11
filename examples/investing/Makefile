@@ -1,2 +1,2 @@
-gen:
+generate:
 	omni generate
