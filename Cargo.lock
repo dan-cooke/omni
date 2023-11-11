@@ -638,6 +638,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "tests-integration"
+version = "0.1.0"
+
+[[package]]
 name = "thiserror"
 version = "1.0.48"
 source = "registry+https://github.com/rust-lang/crates.io-index"

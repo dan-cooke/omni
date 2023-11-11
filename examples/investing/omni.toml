@@ -1,0 +1,4 @@
+outDir = "../generated/investing"
+
+[generators]
+node = { version = "1.0.0", framework = "express", features = ["typescript"] }

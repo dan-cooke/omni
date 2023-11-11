@@ -1,0 +1,9 @@
+service InvestingService {
+	version: "0.0.1",
+}
+
+struct Stock {
+	id: String,
+	name: String,
+	current_price: String,
+}
