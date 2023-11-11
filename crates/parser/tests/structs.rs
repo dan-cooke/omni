@@ -1,5 +1,5 @@
 use insta::assert_json_snapshot;
-use omni_parser::*;
+use parser::*;
 
 #[test]
 pub fn structs_can_be_parsed() {

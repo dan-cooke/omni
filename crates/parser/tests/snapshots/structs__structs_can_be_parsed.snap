@@ -1,5 +1,5 @@
 ---
-source: crates/omni-parser/tests/structs.rs
+source: crates/parser/tests/structs.rs
 expression: ast
 ---
 {

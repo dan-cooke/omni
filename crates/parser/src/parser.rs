@@ -1,6 +1,6 @@
-lalrpop_mod!(parser);
+lalrpop_mod!(omni);
 
-use parser::*;
+use omni::*;
 
 /// Parse an Omni file
 /// This is just a placeholder for the public API for now
