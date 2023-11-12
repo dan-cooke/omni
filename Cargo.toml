@@ -1,12 +1,23 @@
+[package]
+name = "omni"
+version = "0.0.0"
+description = "An IDL and Codegen tool to reduce client/server boilerplate"
+keywords = [
+	"idl",
+	"smithy",
+	"codegen",
+	"cli"
+]
+
 [workspace]
 members = [
 	"crates/parser",
-	"tests-integration",
 ]
 
 
 [workspace.dependencies]
 nextest = "0.0.0"
+
 
 
 

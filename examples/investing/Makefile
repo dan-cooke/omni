@@ -1,2 +1,0 @@
-generate:
-	omni generate
