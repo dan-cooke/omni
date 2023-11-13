@@ -1,6 +1,7 @@
 [package]
 name = "omni"
 version = "0.0.0"
+edition = "2021"
 description = "An IDL and Codegen tool to reduce client/server boilerplate"
 keywords = [
 	"idl",
@@ -11,11 +12,16 @@ keywords = [
 
 [workspace]
 members = [
-	"crates/parser",
+	"omni_parser",
 ]
 
 
-[workspace.dependencies]
+[dependencies]
+omni_parser = { path = "./omni_parser", version = "0.0.0" }
+
+[dev-dependencies]
+assert_cmd = "2.0.12"
+dir-diff = "0.3.2"
 nextest = "0.0.0"
 
 

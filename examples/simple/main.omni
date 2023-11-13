@@ -1,0 +1,13 @@
+service SimpleService {
+	version: "0.0.1",
+	operations: [GetRandomJoke]
+}
+
+struct Joke {
+	joke: String,
+}
+
+operation GetRandomJoke {
+	type: "read",
+	output: Joke
+}

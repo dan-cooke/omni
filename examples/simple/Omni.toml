@@ -1,0 +1,11 @@
+name = "simple"
+version = "1.0.0"
+out-dir = "../generated/investing"
+api-type = "rest"
+
+[server]
+[server.generators.node-express]
+version = "1.0.0"
+express-version = "4.18.2"
+
+
