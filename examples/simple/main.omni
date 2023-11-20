@@ -11,3 +11,4 @@ operation GetRandomJoke {
 	type: "read",
 	output: Joke
 }
+
