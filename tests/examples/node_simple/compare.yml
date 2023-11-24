@@ -5,5 +5,8 @@ rules:
     pattern_exclude:
       - "package-lock.json"
     Json:
+      comparison_modes:
+        - Relative: 0.1
+        - Absolute: 1.0
       ignore_keys:
         - "none"

@@ -19,17 +19,11 @@ pub fn generates_a_node_express_service_with_typescript() {
     project.any(|f| f.unwrap().file_name() == "main.omni");
     project.any(|f| f.unwrap().file_name() == "Omni.toml");
 
-    let path = PathBuf::from_str("examples/compare.yml").unwrap();
-
-    let compare = fs::read_to_string(path).unwrap();
-
-    println!("{compare}");
-
     // Has generated the correct files
     let result = compare_folders(
-        "tests/examples/expected/node_simple",
-        "examples/generated/node_simple",
-        "examples/compare.yml",
+        "tests/examples/node_simple/expected/",
+        "examples/node_simple/generated/",
+        "tests/examples/node_simple/compare.yml",
         "tests/examples/node_simple/report/",
     )
     .unwrap();
