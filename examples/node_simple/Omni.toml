@@ -1,0 +1,8 @@
+[generate]
+
+[[server]]
+out-dir = "./generated"
+generator = {
+  sdk = { name  = "node", version = "1.0.0"},
+  framework = "nestjs"
+}

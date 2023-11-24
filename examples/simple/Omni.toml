@@ -1,8 +1,0 @@
-[generate]
-
-[[server]]
-out-dir = "../generated/investing"
-generator = {
-  sdk = { name  = "node-typescript", version = "1.0.0"},
-  framework = "nestjs",
-}

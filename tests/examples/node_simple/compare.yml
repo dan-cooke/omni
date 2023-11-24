@@ -1,0 +1,9 @@
+rules:
+  - name: "Compare json files"
+    pattern_include:
+      - "**/*.json"
+    pattern_exclude:
+      - "package-lock.json"
+    Json:
+      ignore_keys:
+        - "none"
