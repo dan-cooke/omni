@@ -17,6 +17,7 @@ members = [
 
 
 [dependencies]
+clap = { version = "4.4.8", features = ["derive"] }
 omni_parser = { path = "./omni_parser", version = "0.0.0" }
 
 [dev-dependencies]
