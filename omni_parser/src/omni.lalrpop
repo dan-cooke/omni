@@ -25,6 +25,8 @@ SimpleType: Type = {
 
 Statement: Statement = {
 	"struct" <id:Ident> "{" <properties: Comma<Prop>> "}" => Statement::StructDef { id, properties },
+	"service" <id:Ident> "{" <properties: Comma<Prop>> "}" => Statement::ServiceDef { id, properties },
+	"operation" <id:Ident> "{" <properties: Comma<Prop>> "}" => Statement::OperationDef { id, properties },
 	<_type: SimpleType> <id: Ident> => Statement::SimpleTypeDef { id, _type },
 }
 
@@ -40,6 +42,7 @@ Ident: Identifier = {
 Expr: Expression = {
 	"{" <properties: Comma<Prop>> "}" => Expression::ObjectExpression { properties },
 	<name: "identifier"> => Expression::Identifier{ name },
+	"[" <elements: Comma<Ident>> "]" => Expression::ArrayExpression { elements },
 	"literal_int" => Expression::Literal(Literal::Integer(<>)),
 	"literal_string" => Expression::Literal(Literal::String(<>)),
 	"literal_float" => Expression::Literal(Literal::Float(<>)),

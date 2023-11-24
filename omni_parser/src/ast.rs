@@ -7,6 +7,14 @@ pub struct File {
 
 #[derive(Debug, PartialEq, Serialize, Deserialize)]
 pub enum Statement {
+    ServiceDef {
+        id: Identifier,
+        properties: Vec<Property>,
+    },
+    OperationDef {
+        id: Identifier,
+        properties: Vec<Property>,
+    },
     StructDef {
         id: Identifier,
         properties: Vec<Property>,
@@ -40,6 +48,12 @@ pub struct Property {
 pub enum Expression {
     Literal(Literal),
     Identifier { name: String },
+    // Currently only support list of identifiers
+    // Not sure if we need list of literals yet
+    // We don't want to allow [{ someProperty }] as its too dynamic
+    // We require all array elements to be named types eg [SomeStruct]
+    // So its not Vec<Expression>
+    ArrayExpression { elements: Vec<Identifier> },
     ObjectExpression { properties: Vec<Property> },
 }
 

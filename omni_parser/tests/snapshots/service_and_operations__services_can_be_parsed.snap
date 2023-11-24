@@ -1,0 +1,118 @@
+---
+source: omni_parser/tests/service_and_operations.rs
+expression: ast
+---
+{
+  "body": [
+    {
+      "ServiceDef": {
+        "id": {
+          "name": "TestService"
+        },
+        "properties": [
+          {
+            "id": {
+              "name": "version"
+            },
+            "value": {
+              "Literal": {
+                "String": "\"0.1.0\""
+              }
+            }
+          },
+          {
+            "id": {
+              "name": "operations"
+            },
+            "value": {
+              "ArrayExpression": {
+                "elements": [
+                  {
+                    "name": "TestOperation"
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "StructDef": {
+        "id": {
+          "name": "TestOperationInput"
+        },
+        "properties": [
+          {
+            "id": {
+              "name": "start"
+            },
+            "value": {
+              "Identifier": {
+                "name": "Timestamp"
+              }
+            }
+          },
+          {
+            "id": {
+              "name": "end"
+            },
+            "value": {
+              "Identifier": {
+                "name": "Timestamp"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "StructDef": {
+        "id": {
+          "name": "TestOperationOutput"
+        },
+        "properties": [
+          {
+            "id": {
+              "name": "data"
+            },
+            "value": {
+              "Identifier": {
+                "name": "String"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "OperationDef": {
+        "id": {
+          "name": "TestOperation"
+        },
+        "properties": [
+          {
+            "id": {
+              "name": "input"
+            },
+            "value": {
+              "Identifier": {
+                "name": "TestOperationInput"
+              }
+            }
+          },
+          {
+            "id": {
+              "name": "output"
+            },
+            "value": {
+              "Identifier": {
+                "name": "TestOperationOutput"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
