@@ -1,8 +1,8 @@
-name = "simple"
-version = "1.0.0"
-out-dir = "../generated/investing"
+[generate]
 
 [[server]]
-[[server.sdk]]
-generator = "typescript"
-
+out-dir = "../generated/investing"
+generator = {
+  sdk = { name  = "node-typescript", version = "1.0.0"},
+  framework = "nestjs",
+}
