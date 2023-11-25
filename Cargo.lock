@@ -1234,7 +1234,16 @@ dependencies = [
  "dir-diff",
  "havocompare",
  "nextest",
+ "omni_ast",
  "omni_parser",
+]
+
+[[package]]
+name = "omni_ast"
+version = "0.0.0"
+dependencies = [
+ "serde",
+ "serde_json",
 ]
 
 [[package]]
@@ -1245,8 +1254,7 @@ dependencies = [
  "lalrpop",
  "lalrpop-util",
  "logos",
- "serde",
- "serde_json",
+ "omni_ast",
 ]
 
 [[package]]

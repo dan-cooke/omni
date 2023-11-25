@@ -18,5 +18,5 @@ fn main() {
         &_ => {
             print!("Do nothing");
         }
-    }
+    };
 }

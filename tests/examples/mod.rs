@@ -1,1 +1,1 @@
-pub mod node_simple;
+pub mod simple;
