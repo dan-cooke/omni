@@ -1,3 +1,5 @@
 target
 generated
+node_modules
+!node_modules/@omnidl
 report

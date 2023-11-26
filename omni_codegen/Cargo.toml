@@ -1,10 +1,10 @@
 [package]
-name = "omni_ast"
+name = "omni_codegen"
 version = "0.1.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-serde = { version = "1.0.9", features = ["derive"] }
-serde_json = { version = "1.0.9" }
+omni_ast= { path = "../omni_ast", version = "0.1.0" }
+omni_parser = { path = "../omni_parser", version = "0.1.0" }

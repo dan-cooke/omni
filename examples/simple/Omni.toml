@@ -2,7 +2,7 @@
 
 [[server]]
 out-dir = "./generated"
-generator = {
-  sdk = { name  = "node", version = "1.0.0"},
-  framework = "nestjs"
-}
+
+[[server.generator]]
+sdk = { name  = "node", version = "1.0.0"}
+framework = { name = "nestjs", version = "1.0.0"}

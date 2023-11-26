@@ -1,8 +1,11 @@
 use clap::Command;
-use omni::generate::Generate;
+use omni_codegen::CodeGenerator;
+use omni_typescript::ssdk::TypescriptSSDKGenerator;
 
 fn main() {
-    let mut omni = Command::new("omni").subcommand(Generate::command());
+    let mut omni = Command::new("omni")
+        .subcommand(Command::new("generate"))
+        .visible_alias("g");
 
     let args = omni.clone().get_matches();
 
@@ -14,7 +17,9 @@ fn main() {
     };
 
     match command {
-        "generate" => Generate::run(),
+        "generate" => CodeGenerator::new(TypescriptSSDKGenerator::new())
+            .run()
+            .unwrap(),
         &_ => {
             print!("Do nothing");
         }

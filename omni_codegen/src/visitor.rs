@@ -1,23 +1,6 @@
-use clap::Command;
 use omni_ast::*;
-use omni_parser::parse_file;
 
-pub struct Generate {}
-
-impl Generate {
-    pub fn run(&self) -> Result<(), String> {
-        // Hardcode main.omni for now
-        let file = parse_file("main.omni");
-
-        print!("{:?}", file);
-        Ok(())
-    }
-    pub fn command() -> Command {
-        Command::new("generate").visible_alias("g")
-    }
-}
-
-trait Visitor {
+pub trait Visitor {
     fn visit_file(&mut self, file: &File) {
         for statement in &file.body {
             self.visit_statement(statement);

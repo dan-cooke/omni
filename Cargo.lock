@@ -759,6 +759,20 @@ dependencies = [
 ]
 
 [[package]]
+name = "handlebars"
+version = "4.5.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "faa67bab9ff362228eb3d00bd024a4965d8231bbb7921167f0cfa66c6626b225"
+dependencies = [
+ "log",
+ "pest",
+ "pest_derive",
+ "serde",
+ "serde_json",
+ "thiserror",
+]
+
+[[package]]
 name = "hashbrown"
 version = "0.14.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1227,34 +1241,53 @@ dependencies = [
 
 [[package]]
 name = "omni"
-version = "0.0.0"
+version = "0.1.0"
 dependencies = [
  "assert_cmd",
  "clap",
  "dir-diff",
  "havocompare",
  "nextest",
- "omni_ast",
+ "omni_codegen",
  "omni_parser",
+ "omni_typescript",
 ]
 
 [[package]]
 name = "omni_ast"
-version = "0.0.0"
+version = "0.1.0"
 dependencies = [
  "serde",
  "serde_json",
 ]
 
 [[package]]
+name = "omni_codegen"
+version = "0.1.0"
+dependencies = [
+ "omni_ast",
+ "omni_parser",
+]
+
+[[package]]
 name = "omni_parser"
-version = "0.0.0"
+version = "0.1.0"
 dependencies = [
  "insta",
  "lalrpop",
  "lalrpop-util",
  "logos",
  "omni_ast",
+]
+
+[[package]]
+name = "omni_typescript"
+version = "0.1.0"
+dependencies = [
+ "handlebars",
+ "omni_ast",
+ "omni_codegen",
+ "serde_json",
 ]
 
 [[package]]
