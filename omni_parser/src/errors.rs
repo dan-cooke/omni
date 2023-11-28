@@ -10,6 +10,16 @@ pub enum LexicalError {
     ParseIntError,
 }
 
+#[derive(Debug, PartialEq, Clone)]
+pub struct ErrorDetails {
+    pub message: String,
+}
+#[derive(Debug, PartialEq, Clone)]
+pub enum Error {
+    RequiredField(ErrorDetails),
+    TypeError(ErrorDetails),
+}
+
 impl Default for LexicalError {
     fn default() -> Self {
         Self::InvalidToken("".to_string())

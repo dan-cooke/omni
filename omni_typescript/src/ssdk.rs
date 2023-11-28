@@ -6,8 +6,8 @@ use std::{
 };
 
 use handlebars::Handlebars;
-use omni_ast::*;
 use omni_codegen::{visitor::Visitor, Hooks};
+use omni_parser::ast::*;
 use serde_json::json;
 
 pub struct TypescriptSSDKGenerator {
@@ -21,31 +21,21 @@ impl TypescriptSSDKGenerator {
         }
     }
 
-    pub fn create_module(&self) {
-        let module_path = "./generated/node_modules/@omnidl/server-sdk/";
+    pub fn create_module(&self, path: &str) {
+        create_dir_all(path).unwrap();
+    }
+
+    pub fn create_package_json(&self, path: &str, handlebars_args: serde_json::Value) {
+        let reg = Handlebars::new();
         let package_json_template_path =
             Path::new(env!("CARGO_MANIFEST_DIR")).join("./src/templates/server.package.json.hbs");
-
-        create_dir_all(module_path).unwrap();
-        let reg = Handlebars::new();
         let template = read_to_string(package_json_template_path).unwrap();
 
         let package_json = reg
-            .render_template(
-                template.as_str(),
-                &json!(
-                    {
-
-                        "name": "simple" ,// TODO: hardcode for now
-                        "version": "0.0.1",
-                        "tsVersion": "5.4.3"
-                    }
-
-                ),
-            )
+            .render_template(template.as_str(), &handlebars_args)
             .expect("Error rendering server package json template");
 
-        let mut file = fs::File::create(format!("{}/package.json", module_path)).unwrap();
+        let mut file = fs::File::create(format!("{}/package.json", path)).unwrap();
 
         file.write_all(&package_json.into_bytes()).unwrap();
     }
@@ -53,15 +43,30 @@ impl TypescriptSSDKGenerator {
 
 impl Hooks for TypescriptSSDKGenerator {
     fn setup(&mut self) -> Result<(), String> {
-        self.create_module();
-        todo!()
+        let module_path = "./generated/node_modules/@omnidl/server-sdk/";
+        self.create_module(module_path);
+        Ok(())
     }
 }
 
 impl Visitor for TypescriptSSDKGenerator {
     fn visit_statement(&mut self, statement: &Statement) {
         match statement {
-            Statement::ServiceDef { id, properties } => todo!(),
+            Statement::ServiceDef { id, properties } => {
+                let package_details = json!(
+                    {
+
+                        "name": "simple" ,// TODO: hardcode for now
+                        "version": "1.0.0",
+                        "tsVersion": "5.4.3"
+                    }
+
+                );
+                self.create_package_json(
+                    "./generated/node_modules/@omnidl/server-sdk/",
+                    package_details,
+                );
+            }
             Statement::OperationDef { id, properties } => todo!(),
             Statement::StructDef { id, properties } => todo!(),
             Statement::SimpleTypeDef { id, _type } => todo!(),

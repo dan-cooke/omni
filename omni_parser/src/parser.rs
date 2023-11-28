@@ -1,8 +1,7 @@
 lalrpop_mod!(omni);
-use crate::lexer::Lexer;
+use crate::{ast::File, lexer::Lexer};
 use lalrpop_util::lalrpop_mod;
 use omni::*;
-use omni_ast::File;
 
 /// Parse an Omni file
 /// This is just a placeholder for the public API for now

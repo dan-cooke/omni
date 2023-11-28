@@ -7,6 +7,6 @@ edition = "2021"
 
 [dependencies]
 handlebars = "4.5.0"
-omni_ast= { path = "../omni_ast", version = "0.1.0" }
+omni_parser= { path = "../omni_parser", version = "0.1.0" }
 omni_codegen= { path = "../omni_codegen", version = "0.1.0" }
 serde_json = "1.0.108"

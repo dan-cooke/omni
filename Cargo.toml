@@ -13,7 +13,6 @@ keywords = [
 [workspace]
 members = [
 	"omni_parser",
-	"omni_ast",
 	"omni_codegen",
 	"omni_typescript",
 ]

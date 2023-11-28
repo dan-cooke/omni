@@ -1,6 +1,6 @@
-use omni_ast::*;
 
 
+use crate::ast::*;
 use crate::tokens::Token;
 use crate::errors::{ LexicalError };
 
@@ -23,9 +23,11 @@ SimpleType: Type = {
 	"double" => Type::Double,
 }
 
+
+
 Statement: Statement = {
-	"struct" <id:Ident> "{" <properties: Comma<Prop>> "}" => Statement::StructDef { id, properties },
 	"service" <id:Ident> "{" <properties: Comma<Prop>> "}" => Statement::ServiceDef { id, properties },
+	"struct" <id:Ident> "{" <properties: Comma<Prop>> "}" => Statement::StructDef { id, properties },
 	"operation" <id:Ident> "{" <properties: Comma<Prop>> "}" => Statement::OperationDef { id, properties },
 	<_type: SimpleType> <id: Ident> => Statement::SimpleTypeDef { id, _type },
 }

@@ -1,4 +1,4 @@
-use omni_ast::*;
+use omni_parser::ast::*;
 
 pub trait Visitor {
     fn visit_file(&mut self, file: &File) {
