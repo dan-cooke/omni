@@ -52,7 +52,11 @@ impl Hooks for TypescriptSSDKGenerator {
 impl Visitor for TypescriptSSDKGenerator {
     fn visit_statement(&mut self, statement: &Statement) {
         match statement {
-            Statement::ServiceDef { id, properties } => {
+            Statement::ServiceDef {
+                id,
+                properties,
+                span,
+            } => {
                 let package_details = json!(
                     {
 
@@ -67,9 +71,17 @@ impl Visitor for TypescriptSSDKGenerator {
                     package_details,
                 );
             }
-            Statement::OperationDef { id, properties } => todo!(),
-            Statement::StructDef { id, properties } => todo!(),
-            Statement::SimpleTypeDef { id, _type } => todo!(),
+            Statement::OperationDef {
+                id,
+                properties,
+                span,
+            } => todo!(),
+            Statement::StructDef {
+                id,
+                properties,
+                span,
+            } => todo!(),
+            Statement::SimpleTypeDef { id, _type, span } => todo!(),
         }
     }
 

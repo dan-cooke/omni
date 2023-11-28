@@ -1,5 +1,5 @@
 ---
-source: crates/omni_parser/tests/prelude.rs
+source: omni_parser/tests/prelude.rs
 expression: ast
 ---
 {
@@ -7,73 +7,163 @@ expression: ast
     {
       "SimpleTypeDef": {
         "id": {
-          "name": "String"
+          "name": "String",
+          "span": {
+            "file_name": "tests/test-schemas/types/prelude.omni",
+            "start": 7,
+            "end": 13
+          }
         },
-        "_type": "String"
+        "_type": "String",
+        "span": {
+          "file_name": "tests/test-schemas/types/prelude.omni",
+          "start": 0,
+          "end": 13
+        }
       }
     },
     {
       "SimpleTypeDef": {
         "id": {
-          "name": "Timestamp"
+          "name": "Timestamp",
+          "span": {
+            "file_name": "tests/test-schemas/types/prelude.omni",
+            "start": 25,
+            "end": 34
+          }
         },
-        "_type": "Timestamp"
+        "_type": "Timestamp",
+        "span": {
+          "file_name": "tests/test-schemas/types/prelude.omni",
+          "start": 15,
+          "end": 34
+        }
       }
     },
     {
       "SimpleTypeDef": {
         "id": {
-          "name": "Boolean"
+          "name": "Boolean",
+          "span": {
+            "file_name": "tests/test-schemas/types/prelude.omni",
+            "start": 44,
+            "end": 51
+          }
         },
-        "_type": "Boolean"
+        "_type": "Boolean",
+        "span": {
+          "file_name": "tests/test-schemas/types/prelude.omni",
+          "start": 36,
+          "end": 51
+        }
       }
     },
     {
       "SimpleTypeDef": {
         "id": {
-          "name": "Byte"
+          "name": "Byte",
+          "span": {
+            "file_name": "tests/test-schemas/types/prelude.omni",
+            "start": 58,
+            "end": 62
+          }
         },
-        "_type": "Byte"
+        "_type": "Byte",
+        "span": {
+          "file_name": "tests/test-schemas/types/prelude.omni",
+          "start": 53,
+          "end": 62
+        }
       }
     },
     {
       "SimpleTypeDef": {
         "id": {
-          "name": "Short"
+          "name": "Short",
+          "span": {
+            "file_name": "tests/test-schemas/types/prelude.omni",
+            "start": 70,
+            "end": 75
+          }
         },
-        "_type": "Short"
+        "_type": "Short",
+        "span": {
+          "file_name": "tests/test-schemas/types/prelude.omni",
+          "start": 64,
+          "end": 75
+        }
       }
     },
     {
       "SimpleTypeDef": {
         "id": {
-          "name": "Integer"
+          "name": "Integer",
+          "span": {
+            "file_name": "tests/test-schemas/types/prelude.omni",
+            "start": 85,
+            "end": 92
+          }
         },
-        "_type": "Integer"
+        "_type": "Integer",
+        "span": {
+          "file_name": "tests/test-schemas/types/prelude.omni",
+          "start": 77,
+          "end": 92
+        }
       }
     },
     {
       "SimpleTypeDef": {
         "id": {
-          "name": "Long"
+          "name": "Long",
+          "span": {
+            "file_name": "tests/test-schemas/types/prelude.omni",
+            "start": 99,
+            "end": 103
+          }
         },
-        "_type": "Long"
+        "_type": "Long",
+        "span": {
+          "file_name": "tests/test-schemas/types/prelude.omni",
+          "start": 94,
+          "end": 103
+        }
       }
     },
     {
       "SimpleTypeDef": {
         "id": {
-          "name": "Float"
+          "name": "Float",
+          "span": {
+            "file_name": "tests/test-schemas/types/prelude.omni",
+            "start": 111,
+            "end": 116
+          }
         },
-        "_type": "Float"
+        "_type": "Float",
+        "span": {
+          "file_name": "tests/test-schemas/types/prelude.omni",
+          "start": 105,
+          "end": 116
+        }
       }
     },
     {
       "SimpleTypeDef": {
         "id": {
-          "name": "Double"
+          "name": "Double",
+          "span": {
+            "file_name": "tests/test-schemas/types/prelude.omni",
+            "start": 125,
+            "end": 131
+          }
         },
-        "_type": "Double"
+        "_type": "Double",
+        "span": {
+          "file_name": "tests/test-schemas/types/prelude.omni",
+          "start": 118,
+          "end": 131
+        }
       }
     }
   ]

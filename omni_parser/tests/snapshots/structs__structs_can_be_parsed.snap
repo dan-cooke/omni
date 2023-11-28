@@ -1,5 +1,5 @@
 ---
-source: crates/omni_parser/tests/structs.rs
+source: omni_parser/tests/structs.rs
 expression: ast
 ---
 {
@@ -7,101 +7,251 @@ expression: ast
     {
       "StructDef": {
         "id": {
-          "name": "MyFirstStruct"
+          "name": "MyFirstStruct",
+          "span": {
+            "file_name": "tests/test-schemas/types/structs.omni",
+            "start": 7,
+            "end": 20
+          }
         },
         "properties": [
           {
             "id": {
-              "name": "foo"
+              "name": "foo",
+              "span": {
+                "file_name": "tests/test-schemas/types/structs.omni",
+                "start": 24,
+                "end": 27
+              }
             },
             "value": {
               "Literal": {
-                "String": "\"bar\""
+                "value": {
+                  "String": "\"bar\""
+                },
+                "span": {
+                  "file_name": "tests/test-schemas/types/structs.omni",
+                  "start": 29,
+                  "end": 34
+                }
               }
+            },
+            "span": {
+              "file_name": "tests/test-schemas/types/structs.omni",
+              "start": 24,
+              "end": 34
             }
           },
           {
             "id": {
-              "name": "nested"
+              "name": "nested",
+              "span": {
+                "file_name": "tests/test-schemas/types/structs.omni",
+                "start": 37,
+                "end": 43
+              }
             },
             "value": {
               "ObjectExpression": {
                 "properties": [
                   {
                     "id": {
-                      "name": "fields"
+                      "name": "fields",
+                      "span": {
+                        "file_name": "tests/test-schemas/types/structs.omni",
+                        "start": 49,
+                        "end": 55
+                      }
                     },
                     "value": {
                       "Literal": {
-                        "String": "\"hello\""
+                        "value": {
+                          "String": "\"hello\""
+                        },
+                        "span": {
+                          "file_name": "tests/test-schemas/types/structs.omni",
+                          "start": 57,
+                          "end": 64
+                        }
                       }
+                    },
+                    "span": {
+                      "file_name": "tests/test-schemas/types/structs.omni",
+                      "start": 49,
+                      "end": 64
                     }
                   },
                   {
                     "id": {
-                      "name": "nested_again"
+                      "name": "nested_again",
+                      "span": {
+                        "file_name": "tests/test-schemas/types/structs.omni",
+                        "start": 68,
+                        "end": 80
+                      }
                     },
                     "value": {
                       "ObjectExpression": {
                         "properties": [
                           {
                             "id": {
-                              "name": "number"
+                              "name": "number",
+                              "span": {
+                                "file_name": "tests/test-schemas/types/structs.omni",
+                                "start": 87,
+                                "end": 93
+                              }
                             },
                             "value": {
                               "Literal": {
-                                "Integer": 1234
+                                "value": {
+                                  "Integer": 1234
+                                },
+                                "span": {
+                                  "file_name": "tests/test-schemas/types/structs.omni",
+                                  "start": 95,
+                                  "end": 99
+                                }
                               }
+                            },
+                            "span": {
+                              "file_name": "tests/test-schemas/types/structs.omni",
+                              "start": 87,
+                              "end": 99
                             }
                           },
                           {
                             "id": {
-                              "name": "decimal"
+                              "name": "decimal",
+                              "span": {
+                                "file_name": "tests/test-schemas/types/structs.omni",
+                                "start": 104,
+                                "end": 111
+                              }
                             },
                             "value": {
                               "Literal": {
-                                "Float": 12.23
+                                "value": {
+                                  "Float": 12.23
+                                },
+                                "span": {
+                                  "file_name": "tests/test-schemas/types/structs.omni",
+                                  "start": 113,
+                                  "end": 118
+                                }
                               }
+                            },
+                            "span": {
+                              "file_name": "tests/test-schemas/types/structs.omni",
+                              "start": 104,
+                              "end": 118
                             }
                           }
-                        ]
+                        ],
+                        "span": {
+                          "file_name": "tests/test-schemas/types/structs.omni",
+                          "start": 82,
+                          "end": 122
+                        }
                       }
+                    },
+                    "span": {
+                      "file_name": "tests/test-schemas/types/structs.omni",
+                      "start": 68,
+                      "end": 122
                     }
                   }
-                ]
+                ],
+                "span": {
+                  "file_name": "tests/test-schemas/types/structs.omni",
+                  "start": 45,
+                  "end": 126
+                }
               }
+            },
+            "span": {
+              "file_name": "tests/test-schemas/types/structs.omni",
+              "start": 37,
+              "end": 126
             }
           },
           {
             "id": {
-              "name": "identifiers"
+              "name": "identifiers",
+              "span": {
+                "file_name": "tests/test-schemas/types/structs.omni",
+                "start": 129,
+                "end": 140
+              }
             },
             "value": {
               "Identifier": {
-                "name": "AnotherStruct"
+                "name": "AnotherStruct",
+                "span": {
+                  "file_name": "tests/test-schemas/types/structs.omni",
+                  "start": 142,
+                  "end": 155
+                }
               }
+            },
+            "span": {
+              "file_name": "tests/test-schemas/types/structs.omni",
+              "start": 129,
+              "end": 155
             }
           }
-        ]
+        ],
+        "span": {
+          "file_name": "tests/test-schemas/types/structs.omni",
+          "start": 0,
+          "end": 157
+        }
       }
     },
     {
       "StructDef": {
         "id": {
-          "name": "AnotherStruct"
+          "name": "AnotherStruct",
+          "span": {
+            "file_name": "tests/test-schemas/types/structs.omni",
+            "start": 166,
+            "end": 179
+          }
         },
         "properties": [
           {
             "id": {
-              "name": "id"
+              "name": "id",
+              "span": {
+                "file_name": "tests/test-schemas/types/structs.omni",
+                "start": 183,
+                "end": 185
+              }
             },
             "value": {
               "Literal": {
-                "String": "\"hello\""
+                "value": {
+                  "String": "\"hello\""
+                },
+                "span": {
+                  "file_name": "tests/test-schemas/types/structs.omni",
+                  "start": 187,
+                  "end": 194
+                }
               }
+            },
+            "span": {
+              "file_name": "tests/test-schemas/types/structs.omni",
+              "start": 183,
+              "end": 194
             }
           }
-        ]
+        ],
+        "span": {
+          "file_name": "tests/test-schemas/types/structs.omni",
+          "start": 159,
+          "end": 196
+        }
       }
     }
   ]

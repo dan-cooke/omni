@@ -5,7 +5,11 @@ use crate::tokens::Token;
 use crate::errors::{ LexicalError };
 
 
-grammar;
+grammar(file_name: &str);
+
+Spanned<T>: (usize, usize) = {
+    <@L> T <@R> => (<>)
+};
 
 pub File: File = {
 	<body: Statement*> => File { body }
@@ -26,28 +30,73 @@ SimpleType: Type = {
 
 
 Statement: Statement = {
-	"service" <id:Ident> "{" <properties: Comma<Prop>> "}" => Statement::ServiceDef { id, properties },
-	"struct" <id:Ident> "{" <properties: Comma<Prop>> "}" => Statement::StructDef { id, properties },
-	"operation" <id:Ident> "{" <properties: Comma<Prop>> "}" => Statement::OperationDef { id, properties },
-	<_type: SimpleType> <id: Ident> => Statement::SimpleTypeDef { id, _type },
+	<start:@L> "service" <id:Ident> "{" <properties: Comma<Prop>> "}" <end:@R> => Statement::StructDef { 
+	  id, 
+	  properties,
+	  span: Span::new(file_name, start, end)
+	},
+	<start:@L> "operation" <id:Ident> "{" <properties: Comma<Prop>> "}" <end:@R> => Statement::OperationDef { 
+	  id, 
+	  properties,
+	  span: Span::new(file_name, start, end)
+	},
+	<start:@L> "struct" <id:Ident> "{" <properties: Comma<Prop>> "}" <end:@R> => Statement::StructDef { 
+	  id, 
+	  properties,
+	  span: Span::new(file_name, start, end)
+	},
+	<start:@L> <_type: SimpleType> <id: Ident> <end: @R> => Statement::SimpleTypeDef { 
+	  id, 
+	  _type,
+	  span: Span::new(file_name, start, end)
+	},
 }
+
 
 
 Prop: Property = {
-	<id:Ident>":"<value: Expr> => Property { id, value }
+	<start: @L> <id:Ident>":"<value: Expr> <end: @R> => 
+	  Property { 
+	    id, 
+	    value,
+	    span: Span::new(file_name, start, end)
+	  }
 }
 
 Ident: Identifier = {
-	<name: "identifier"> => Identifier { name }
+	<start: @L> <name: "identifier"> <end: @R> => Identifier { name, span: Span::new(file_name, start, end)}
 }
 
 Expr: Expression = {
-	"{" <properties: Comma<Prop>> "}" => Expression::ObjectExpression { properties },
-	<name: "identifier"> => Expression::Identifier{ name },
-	"[" <elements: Comma<Ident>> "]" => Expression::ArrayExpression { elements },
-	"literal_int" => Expression::Literal(Literal::Integer(<>)),
-	"literal_string" => Expression::Literal(Literal::String(<>)),
-	"literal_float" => Expression::Literal(Literal::Float(<>)),
+	<start: @L> "{" <properties: Comma<Prop>> "}" <end: @R> => 
+	  Expression::ObjectExpression(
+	    ObjectExpression { 
+	      properties, 
+	      span: Span::new(file_name, start, end)
+	    }
+	  ),
+	<start: @L> <name: "identifier"> <end: @R> => Expression::Identifier(Identifier {
+	  name,
+	  span: Span::new(file_name, start, end),
+	}),
+	<start: @L> "[" <elements: Comma<Ident>> "]" <end: @R> => Expression::ArrayExpression(
+	  ArrayExpression {
+	    elements,
+	    span: Span::new(file_name, start, end),
+	  }
+	),
+	<start: @L> <val:"literal_int"> <end: @R> => Expression::Literal(Literal { 
+	  value: LiteralType::Integer(val),
+	  span: Span::new(file_name, start, end),
+	}),
+	<start: @L> <val:"literal_string"> <end: @R> => Expression::Literal(Literal { 
+	  value: LiteralType::String(val),
+	  span: Span::new(file_name, start, end),
+	}),
+	<start: @L> <val: "literal_float"> <end: @R> => Expression::Literal(Literal { 
+	  value: LiteralType::Float(val),
+	  span: Span::new(file_name, start, end),
+	}),
 }
 
 

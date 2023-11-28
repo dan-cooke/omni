@@ -6,22 +6,46 @@ pub struct File {
 }
 
 #[derive(Debug, PartialEq, Serialize, Deserialize)]
+pub struct Span {
+    // name of the file
+    file_name: String,
+    //  start offset in bytes from beginning of file
+    start: usize,
+    //  end offset in bytes from beginning of file
+    end: usize,
+}
+
+impl Span {
+    pub fn new(file_name: &str, start: usize, end: usize) -> Self {
+        Self {
+            file_name: file_name.into(),
+            start,
+            end,
+        }
+    }
+}
+
+#[derive(Debug, PartialEq, Serialize, Deserialize)]
 pub enum Statement {
     ServiceDef {
         id: Identifier,
         properties: Vec<Property>,
+        span: Span,
     },
     OperationDef {
         id: Identifier,
         properties: Vec<Property>,
+        span: Span,
     },
     StructDef {
         id: Identifier,
         properties: Vec<Property>,
+        span: Span,
     },
     SimpleTypeDef {
         id: Identifier,
         _type: Type,
+        span: Span,
     },
 }
 
@@ -42,23 +66,24 @@ pub enum Type {
 pub struct Property {
     pub id: Identifier,
     pub value: Expression,
+    pub span: Span,
 }
 
 #[derive(Debug, PartialEq, Serialize, Deserialize)]
 pub enum Expression {
     Literal(Literal),
-    Identifier { name: String },
+    Identifier(Identifier),
     // Currently only support list of identifiers
     // Not sure if we need list of literals yet
     // We don't want to allow [{ someProperty }] as its too dynamic
     // We require all array elements to be named types eg [SomeStruct]
     // So its not Vec<Expression>
-    ArrayExpression { elements: Vec<Identifier> },
-    ObjectExpression { properties: Vec<Property> },
+    ArrayExpression(ArrayExpression),
+    ObjectExpression(ObjectExpression),
 }
 
 #[derive(Debug, PartialEq, Serialize, Deserialize)]
-pub enum Literal {
+pub enum LiteralType {
     String(String),
     Integer(i64),
     Float(f64),
@@ -67,6 +92,24 @@ pub enum Literal {
 }
 
 #[derive(Debug, PartialEq, Serialize, Deserialize)]
+pub struct ArrayExpression {
+    pub elements: Vec<Identifier>,
+    pub span: Span,
+}
+#[derive(Debug, PartialEq, Serialize, Deserialize)]
+pub struct ObjectExpression {
+    pub properties: Vec<Property>,
+    pub span: Span,
+}
+
+#[derive(Debug, PartialEq, Serialize, Deserialize)]
+pub struct Literal {
+    pub value: LiteralType,
+    pub span: Span,
+}
+
+#[derive(Debug, PartialEq, Serialize, Deserialize)]
 pub struct Identifier {
     pub name: String,
+    pub span: Span,
 }

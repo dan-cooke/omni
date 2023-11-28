@@ -5,113 +5,265 @@ expression: ast
 {
   "body": [
     {
-      "ServiceDef": {
+      "StructDef": {
         "id": {
-          "name": "TestService"
+          "name": "TestService",
+          "span": {
+            "file_name": "tests/test-schemas/types/service_and_operations.omni",
+            "start": 8,
+            "end": 19
+          }
         },
         "properties": [
           {
             "id": {
-              "name": "version"
+              "name": "version",
+              "span": {
+                "file_name": "tests/test-schemas/types/service_and_operations.omni",
+                "start": 24,
+                "end": 31
+              }
             },
             "value": {
               "Literal": {
-                "String": "\"0.1.0\""
+                "value": {
+                  "String": "\"0.1.0\""
+                },
+                "span": {
+                  "file_name": "tests/test-schemas/types/service_and_operations.omni",
+                  "start": 33,
+                  "end": 40
+                }
               }
+            },
+            "span": {
+              "file_name": "tests/test-schemas/types/service_and_operations.omni",
+              "start": 24,
+              "end": 40
             }
           },
           {
             "id": {
-              "name": "operations"
+              "name": "operations",
+              "span": {
+                "file_name": "tests/test-schemas/types/service_and_operations.omni",
+                "start": 44,
+                "end": 54
+              }
             },
             "value": {
               "ArrayExpression": {
                 "elements": [
                   {
-                    "name": "TestOperation"
+                    "name": "TestOperation",
+                    "span": {
+                      "file_name": "tests/test-schemas/types/service_and_operations.omni",
+                      "start": 57,
+                      "end": 70
+                    }
                   }
-                ]
+                ],
+                "span": {
+                  "file_name": "tests/test-schemas/types/service_and_operations.omni",
+                  "start": 56,
+                  "end": 71
+                }
               }
+            },
+            "span": {
+              "file_name": "tests/test-schemas/types/service_and_operations.omni",
+              "start": 44,
+              "end": 71
             }
           }
-        ]
+        ],
+        "span": {
+          "file_name": "tests/test-schemas/types/service_and_operations.omni",
+          "start": 0,
+          "end": 73
+        }
       }
     },
     {
       "StructDef": {
         "id": {
-          "name": "TestOperationInput"
+          "name": "TestOperationInput",
+          "span": {
+            "file_name": "tests/test-schemas/types/service_and_operations.omni",
+            "start": 82,
+            "end": 100
+          }
         },
         "properties": [
           {
             "id": {
-              "name": "start"
+              "name": "start",
+              "span": {
+                "file_name": "tests/test-schemas/types/service_and_operations.omni",
+                "start": 105,
+                "end": 110
+              }
             },
             "value": {
               "Identifier": {
-                "name": "Timestamp"
+                "name": "Timestamp",
+                "span": {
+                  "file_name": "tests/test-schemas/types/service_and_operations.omni",
+                  "start": 112,
+                  "end": 121
+                }
               }
+            },
+            "span": {
+              "file_name": "tests/test-schemas/types/service_and_operations.omni",
+              "start": 105,
+              "end": 121
             }
           },
           {
             "id": {
-              "name": "end"
+              "name": "end",
+              "span": {
+                "file_name": "tests/test-schemas/types/service_and_operations.omni",
+                "start": 125,
+                "end": 128
+              }
             },
             "value": {
               "Identifier": {
-                "name": "Timestamp"
+                "name": "Timestamp",
+                "span": {
+                  "file_name": "tests/test-schemas/types/service_and_operations.omni",
+                  "start": 130,
+                  "end": 139
+                }
               }
+            },
+            "span": {
+              "file_name": "tests/test-schemas/types/service_and_operations.omni",
+              "start": 125,
+              "end": 139
             }
           }
-        ]
+        ],
+        "span": {
+          "file_name": "tests/test-schemas/types/service_and_operations.omni",
+          "start": 75,
+          "end": 141
+        }
       }
     },
     {
       "StructDef": {
         "id": {
-          "name": "TestOperationOutput"
+          "name": "TestOperationOutput",
+          "span": {
+            "file_name": "tests/test-schemas/types/service_and_operations.omni",
+            "start": 150,
+            "end": 169
+          }
         },
         "properties": [
           {
             "id": {
-              "name": "data"
+              "name": "data",
+              "span": {
+                "file_name": "tests/test-schemas/types/service_and_operations.omni",
+                "start": 174,
+                "end": 178
+              }
             },
             "value": {
               "Identifier": {
-                "name": "String"
+                "name": "String",
+                "span": {
+                  "file_name": "tests/test-schemas/types/service_and_operations.omni",
+                  "start": 180,
+                  "end": 186
+                }
               }
+            },
+            "span": {
+              "file_name": "tests/test-schemas/types/service_and_operations.omni",
+              "start": 174,
+              "end": 186
             }
           }
-        ]
+        ],
+        "span": {
+          "file_name": "tests/test-schemas/types/service_and_operations.omni",
+          "start": 143,
+          "end": 189
+        }
       }
     },
     {
       "OperationDef": {
         "id": {
-          "name": "TestOperation"
+          "name": "TestOperation",
+          "span": {
+            "file_name": "tests/test-schemas/types/service_and_operations.omni",
+            "start": 201,
+            "end": 214
+          }
         },
         "properties": [
           {
             "id": {
-              "name": "input"
+              "name": "input",
+              "span": {
+                "file_name": "tests/test-schemas/types/service_and_operations.omni",
+                "start": 219,
+                "end": 224
+              }
             },
             "value": {
               "Identifier": {
-                "name": "TestOperationInput"
+                "name": "TestOperationInput",
+                "span": {
+                  "file_name": "tests/test-schemas/types/service_and_operations.omni",
+                  "start": 226,
+                  "end": 244
+                }
               }
+            },
+            "span": {
+              "file_name": "tests/test-schemas/types/service_and_operations.omni",
+              "start": 219,
+              "end": 244
             }
           },
           {
             "id": {
-              "name": "output"
+              "name": "output",
+              "span": {
+                "file_name": "tests/test-schemas/types/service_and_operations.omni",
+                "start": 248,
+                "end": 254
+              }
             },
             "value": {
               "Identifier": {
-                "name": "TestOperationOutput"
+                "name": "TestOperationOutput",
+                "span": {
+                  "file_name": "tests/test-schemas/types/service_and_operations.omni",
+                  "start": 256,
+                  "end": 275
+                }
               }
+            },
+            "span": {
+              "file_name": "tests/test-schemas/types/service_and_operations.omni",
+              "start": 248,
+              "end": 275
             }
           }
-        ]
+        ],
+        "span": {
+          "file_name": "tests/test-schemas/types/service_and_operations.omni",
+          "start": 191,
+          "end": 277
+        }
       }
     }
   ]

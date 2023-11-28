@@ -10,5 +10,5 @@ pub fn parse_file(file_path: &str) -> File {
         .expect(format!("Could not find file {}", file_path).as_str());
     let lexer = Lexer::new(&source);
     let omni_parser = FileParser::new();
-    omni_parser.parse(lexer).unwrap()
+    omni_parser.parse(file_path, lexer).unwrap()
 }
