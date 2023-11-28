@@ -1,14 +1,10 @@
-use std::{
-    fmt::format,
-    fs::{self, create_dir_all, read_to_string},
-    io::Write,
-    path::{self, Path},
-};
+use std::fs::create_dir_all;
 
-use handlebars::Handlebars;
 use omni_codegen::{visitor::Visitor, Hooks};
 use omni_parser::ast::*;
 use serde_json::json;
+
+use crate::templates::Template;
 
 pub struct TypescriptSSDKGenerator {
     output: String,
@@ -26,18 +22,8 @@ impl TypescriptSSDKGenerator {
     }
 
     pub fn create_package_json(&self, path: &str, handlebars_args: serde_json::Value) {
-        let reg = Handlebars::new();
-        let package_json_template_path =
-            Path::new(env!("CARGO_MANIFEST_DIR")).join("./src/templates/server.package.json.hbs");
-        let template = read_to_string(package_json_template_path).unwrap();
-
-        let package_json = reg
-            .render_template(template.as_str(), &handlebars_args)
-            .expect("Error rendering server package json template");
-
-        let mut file = fs::File::create(format!("{}/package.json", path)).unwrap();
-
-        file.write_all(&package_json.into_bytes()).unwrap();
+        let template = Template::new("./src/templates/server.package.json");
+        template.render_to_file(handlebars_args, &path).unwrap();
     }
 }
 
