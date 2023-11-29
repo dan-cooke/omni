@@ -28,7 +28,7 @@ SimpleType: Type = {
 
 
 Statement: Statement = {
-	<start:@L> "service" <id:Ident> "{" <properties: Comma<Prop>> "}" <end:@R> => Statement::StructDef { 
+	<start:@L> "service" <id:Ident> "{" <properties: Comma<Prop>> "}" <end:@R> => Statement::ServiceDef { 
 	  id, 
 	  properties,
 	  span: Span::new(file_name, start, end)
