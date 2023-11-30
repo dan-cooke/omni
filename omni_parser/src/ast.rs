@@ -1,3 +1,5 @@
+use std::path::{Path, PathBuf};
+
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, PartialEq, Serialize, Deserialize)]
@@ -8,7 +10,7 @@ pub struct File {
 #[derive(Debug, PartialEq, Serialize, Deserialize)]
 pub struct Span {
     // name of the file
-    file_name: String,
+    file_name: PathBuf,
     //  start offset in bytes from beginning of file
     start: usize,
     //  end offset in bytes from beginning of file
@@ -16,9 +18,9 @@ pub struct Span {
 }
 
 impl Span {
-    pub fn new(file_name: &str, start: usize, end: usize) -> Self {
+    pub fn new<P: AsRef<Path>>(file_name: P, start: usize, end: usize) -> Self {
         Self {
-            file_name: file_name.into(),
+            file_name: file_name.as_ref().into(),
             start,
             end,
         }
@@ -27,11 +29,6 @@ impl Span {
 
 #[derive(Debug, PartialEq, Serialize, Deserialize)]
 pub enum Statement {
-    ServiceDef {
-        id: Identifier,
-        properties: Vec<Property>,
-        span: Span,
-    },
     OperationDef {
         id: Identifier,
         properties: Vec<Property>,

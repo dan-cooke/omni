@@ -1,11 +1,7 @@
 use omni_parser::ast::*;
 
 pub trait Visitor {
-    fn visit_file(&mut self, file: &File) {
-        for statement in &file.body {
-            self.visit_statement(statement);
-        }
-    }
+    fn visit_file(&mut self, file: &File);
     fn visit_statement(&mut self, statement: &Statement);
     fn visit_property(&mut self, property: &Property);
     fn visit_expression(&mut self, expression: &Expression);

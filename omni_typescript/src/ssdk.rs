@@ -1,8 +1,8 @@
-use std::fs::create_dir_all;
+use std::fs::{create_dir_all, write};
+use std::io::prelude::*;
 
 use omni_codegen::{visitor::Visitor, Hooks};
 use omni_parser::ast::*;
-use serde_json::json;
 
 use crate::templates::Template;
 
@@ -22,7 +22,7 @@ impl TypescriptSSDKGenerator {
     }
 
     pub fn create_package_json(&self, path: &str, handlebars_args: serde_json::Value) {
-        let template = Template::new("./src/templates/server.package.json");
+        let template = Template::new("src/templates/server.package.json.hbs");
         template.render_to_file(handlebars_args, &path).unwrap();
     }
 }
@@ -36,55 +36,106 @@ impl Hooks for TypescriptSSDKGenerator {
 }
 
 impl Visitor for TypescriptSSDKGenerator {
+    fn visit_file(&mut self, file: &File) {
+        for statement in &file.body {
+            self.visit_statement(statement);
+        }
+
+        let mut index_file =
+            std::fs::File::create("./generated/node_modules/@omnidl/server-sdk/index.ts").unwrap();
+
+        index_file.write_all(self.output.as_bytes()).unwrap();
+    }
+    /// export function getGetRandomJokeHandler<Context>(operation: Operation<GetRandomJokeInput, GetRandomJokeOutput, Context>): Handler<HttpRequest, HttpResponse, Context> {
+    // 	return {
+    // 		handle: (request, context) => {
+    // 			return serializeHttpJsonResponse(operation(undefined, context));
+    // 		}
+    // 	}
+    // }
     fn visit_statement(&mut self, statement: &Statement) {
         match statement {
-            Statement::ServiceDef {
-                id,
-                properties,
-                span,
-            } => {
-                let package_details = json!(
-                    {
-
-                        "name": "simple" ,// TODO: hardcode for now
-                        "version": "1.0.0",
-                        "tsVersion": "5.4.3"
-                    }
-
-                );
-                self.create_package_json(
-                    "./generated/node_modules/@omnidl/server-sdk/",
-                    package_details,
-                );
-            }
             Statement::OperationDef {
                 id,
                 properties,
                 span,
-            } => todo!(),
+            } => {
+                self.output.push_str("export function ");
+                self.output.push_str("get");
+                self.visit_identifier(id);
+            }
+
             Statement::StructDef {
                 id,
                 properties,
                 span,
-            } => todo!(),
+            } => {
+                self.output.push_str("export interface ");
+                self.visit_identifier(id);
+                self.output.push_str(" {");
+                properties.iter().for_each(|property| {
+                    self.visit_property(property);
+                });
+                self.output.push_str("}");
+            }
             Statement::SimpleTypeDef { id, _type, span } => todo!(),
         }
     }
 
     fn visit_property(&mut self, property: &Property) {
-        todo!()
+        self.visit_identifier(&property.id);
+        self.output.push_str(": ");
+        self.visit_expression(&property.value);
+        self.output.push_str(",");
     }
 
     fn visit_expression(&mut self, expression: &Expression) {
-        todo!()
+        match &expression {
+            Expression::Literal(val) => {
+                self.visit_literal(val);
+            }
+            Expression::Identifier(val) => {
+                self.visit_identifier(val);
+            }
+            Expression::ArrayExpression(val) => {
+                self.output.push_str("[");
+                val.elements.iter().for_each(|element| {
+                    self.visit_identifier(element);
+                });
+                self.output.push_str("]");
+            }
+            Expression::ObjectExpression(val) => {
+                self.output.push_str("{");
+                val.properties.iter().for_each(|property| {
+                    self.visit_property(property);
+                });
+                self.output.push_str("}");
+            }
+        }
     }
 
     fn visit_identifier(&mut self, identifier: &Identifier) {
-        todo!()
+        self.output.push_str(&format!("{}", identifier.name));
     }
 
     fn visit_literal(&mut self, literal: &Literal) {
-        todo!()
+        match &literal.value {
+            LiteralType::String(val) => {
+                self.output.push_str(&format!("\"{}\"", val));
+            }
+            LiteralType::Integer(val) => {
+                self.output.push_str(&format!("{}", val));
+            }
+            LiteralType::Float(val) => {
+                self.output.push_str(&format!("{}", val));
+            }
+            LiteralType::Boolean(val) => {
+                self.output.push_str(&format!("{}", val));
+            }
+            LiteralType::Null => {
+                self.output.push_str("null");
+            }
+        }
     }
 
     fn visit_type(&mut self, _type: &Type) {

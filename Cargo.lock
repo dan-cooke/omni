@@ -1261,6 +1261,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "omni_compiler"
+version = "0.1.0"
+dependencies = [
+ "omni_parser",
+]
+
+[[package]]
 name = "omni_parser"
 version = "0.1.0"
 dependencies = [

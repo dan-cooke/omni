@@ -1,9 +1,10 @@
+use std::path::Path;
 use crate::ast::*;
 use crate::tokens::Token;
 use crate::errors::{ LexicalError };
 
 
-grammar(file_name: &str);
+grammar<P>(file_name: &P) where P: AsRef<Path>;
 
 Spanned<T>: (usize, usize) = {
     <@L> T <@R> => (<>)
@@ -28,11 +29,6 @@ SimpleType: Type = {
 
 
 Statement: Statement = {
-	<start:@L> "service" <id:Ident> "{" <properties: Comma<Prop>> "}" <end:@R> => Statement::ServiceDef { 
-	  id, 
-	  properties,
-	  span: Span::new(file_name, start, end)
-	},
 	<start:@L> "operation" <id:Ident> "{" <properties: Comma<Prop>> "}" <end:@R> => Statement::OperationDef { 
 	  id, 
 	  properties,

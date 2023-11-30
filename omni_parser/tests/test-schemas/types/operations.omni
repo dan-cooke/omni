@@ -1,8 +1,3 @@
-service TestService {
-  version: "0.1.0",
-  operations: [TestOperation]
-}
-
 struct TestOperationInput {
   start: Timestamp,
   end: Timestamp

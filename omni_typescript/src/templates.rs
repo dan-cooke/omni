@@ -23,6 +23,7 @@ impl Template {
         out_path: &str,
     ) -> Result<(), RenderError> {
         let reg = Handlebars::new();
+        println!("{}", &self.path.to_str().unwrap());
         let template = read_to_string(&self.path).unwrap();
 
         let content = reg.render_template(template.as_str(), &args)?;
