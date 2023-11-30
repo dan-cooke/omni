@@ -111,7 +111,6 @@ extern {
 	type Location = usize;
 	type Error = LexicalError;
 	enum Token {
-	    "service" => Token::KwService,
 	    "operation" => Token::KwOperation,
 	    "import" => Token::KwImport,
 	    "from" => Token::KwFrom,

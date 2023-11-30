@@ -10,8 +10,6 @@ use crate::errors::LexicalError;
 #[logos(skip r"[ \t\n\f]+")]
 #[logos(error = LexicalError)]
 pub enum Token {
-    #[token("service")]
-    KwService,
     #[token("operation")]
     KwOperation,
     #[token("import")]

@@ -2,11 +2,6 @@
 // We are defining a simple jokes-service that
 // will return a joke
 
-service JokeService {
-	version: "1.0.0",
-	resources: [Joke]
-}
-
 @resource(operations: [GetJoke])
 struct Joke {
 	body: String,
