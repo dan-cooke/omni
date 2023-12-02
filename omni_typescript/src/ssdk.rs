@@ -1,8 +1,10 @@
-use std::fs::{create_dir_all, write};
+use std::fs::{self, create_dir_all, write};
 use std::io::prelude::*;
+use std::path::{Path, PathBuf};
 
 use omni_codegen::{visitor::Visitor, Hooks};
 use omni_parser::ast::*;
+use serde_json::json;
 
 use crate::templates::Template;
 
@@ -17,20 +19,36 @@ impl TypescriptSSDKGenerator {
         }
     }
 
-    pub fn create_module(&self, path: &str) {
+    pub fn create_module<P: AsRef<Path>>(&self, path: &P) {
         create_dir_all(path).unwrap();
     }
 
-    pub fn create_package_json(&self, path: &str, handlebars_args: serde_json::Value) {
-        let template = Template::new("src/templates/server.package.json.hbs");
+    pub fn create_package_json<P: AsRef<Path>>(
+        &self,
+        path: &P,
+        handlebars_args: serde_json::Value,
+    ) {
+        let template = Template::new("ssdk/package.json.hbs");
         template.render_to_file(handlebars_args, &path).unwrap();
+    }
+    pub fn create_tsconfig<P: AsRef<Path>>(&self, path: &P) {
+        let tsconfig_path = PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+            .join("src")
+            .join("templates")
+            .join("ssdk")
+            .join("tsconfig.json");
+
+        fs::copy(tsconfig_path, path).unwrap();
     }
 }
 
 impl Hooks for TypescriptSSDKGenerator {
     fn setup(&mut self) -> Result<(), String> {
-        let module_path = "./generated/node_modules/@omnidl/server-sdk/";
-        self.create_module(module_path);
+        let module_path = PathBuf::from("./generated/node_modules/@omnidl/server-sdk/");
+        self.create_module(&module_path);
+
+        let tsconfig_path = module_path.join("tsconfig.json");
+        self.create_tsconfig(&tsconfig_path);
         Ok(())
     }
 }
@@ -53,6 +71,10 @@ impl Visitor for TypescriptSSDKGenerator {
     // 		}
     // 	}
     // }
+    //
+    //
+    //
+    //
     fn visit_statement(&mut self, statement: &Statement) {
         match statement {
             Statement::OperationDef {
@@ -60,9 +82,49 @@ impl Visitor for TypescriptSSDKGenerator {
                 properties,
                 span,
             } => {
-                self.output.push_str("export function ");
-                self.output.push_str("get");
-                self.visit_identifier(id);
+                let input_class_name = properties
+                    .iter()
+                    .find(|property| property.id.name == "input")
+                    .map(|property| {
+                        // TODO: we don't want codegen authors to handle this here
+                        // Input will be guaranteed to be an Option<Identifier>
+                        // Otherwise there has been a compilation error and we won't
+                        // reach this point
+                        if let Expression::Identifier(identifier) = &property.value {
+                            identifier.name.as_str()
+                        } else {
+                            "null"
+                        }
+                    })
+                    .unwrap_or("null");
+
+                let output_class_name = properties
+                    .iter()
+                    .find(|property| property.id.name == "output")
+                    .map(|property| {
+                        // TODO: we don't want codegen authors to handle this here
+                        // Output will be guaranteed to be an Option<Identifier>
+                        // Otherwise there has been a compilation error and we won't
+                        // reach this point
+                        if let Expression::Identifier(identifier) = &property.value {
+                            identifier.name.as_str()
+                        } else {
+                            "null"
+                        }
+                    })
+                    .unwrap_or("null");
+
+                let operation = Template::new("ssdk/operation.hbs");
+
+                let operation = operation
+                    .render_to_string(json!({
+                        "operation_id": id.name,
+                        "input_class_name": input_class_name,
+                        "output_class_name": output_class_name,
+                    }))
+                    .unwrap();
+
+                self.output.push_str(&operation);
             }
 
             Statement::StructDef {
@@ -76,7 +138,7 @@ impl Visitor for TypescriptSSDKGenerator {
                 properties.iter().for_each(|property| {
                     self.visit_property(property);
                 });
-                self.output.push_str("}");
+                self.output.push_str("}; \n\n");
             }
             Statement::SimpleTypeDef { id, _type, span } => todo!(),
         }

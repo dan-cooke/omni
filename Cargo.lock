@@ -1264,6 +1264,7 @@ dependencies = [
 name = "omni_compiler"
 version = "0.1.0"
 dependencies = [
+ "omni_codegen",
  "omni_parser",
 ]
 

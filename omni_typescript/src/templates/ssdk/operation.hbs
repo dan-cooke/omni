@@ -1,0 +1,12 @@
+type {{operation_id}}Input = {{input_class_name}}
+type {{operation_id}}Output = {{output_class_name}}
+
+export function get{{operation_id}}Handler<Context>(operation: Operation<{{operation_id}}Input, {{operation_id}}Output, Context>): Handler<HttpRequest, HttpResponse, Context> {
+	return {
+		handle: (request, context) => {
+			const result = new {{output_class_name}}(operation(undefined, context));
+			return result.output();
+		}
+	}
+
+}

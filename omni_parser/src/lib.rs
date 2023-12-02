@@ -1,5 +1,4 @@
 pub mod ast;
-mod ast_util;
 mod errors;
 mod helpers;
 mod lexer;

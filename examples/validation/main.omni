@@ -1,0 +1,11 @@
+@validate(max_length = 20)
+string ShortJoke;
+
+struct Joke {
+	joke: ShortJoke,
+}
+
+operation GetRandomJoke {
+	output: Joke
+}
+

@@ -5,3 +5,4 @@ struct Joke {
 operation GetRandomJoke {
 	output: Joke
 }
+
