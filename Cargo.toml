@@ -12,18 +12,18 @@ keywords = [
 
 [workspace]
 members = [
-	"omni_compiler",
-	"omni_parser",
-	"omni_codegen",
-	"omni_typescript",
+	"compiler",
+	"parser",
+	"codegen",
+	"typescript",
 ]
 
 
 [dependencies]
 clap = { version = "4.4.8", features = ["derive"] }
-omni_parser = { path = "./omni_parser", version = "0.1.0" }
-omni_codegen= { path = "./omni_codegen", version = "0.1.0" }
-omni_typescript= { path = "./omni_typescript", version = "0.1.0" }
+omni_parser = { path = "./parser", version = "0.1.0" }
+omni_codegen= { path = "./codegen", version = "0.1.0" }
+omni_typescript= { path = "./typescript", version = "0.1.0" }
 
 [dev-dependencies]
 assert_cmd = "2.0.12"
