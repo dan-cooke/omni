@@ -1,9 +1,3 @@
-/// Notes: for next dev time 1/12/23/
-/// Reading my book I have made some notews on how to sturcture the AST
-/// 1. We could store a Token in each AST node this would make it
-///  easier to extract the value of literals and identifiers
-///
-///  Consider a more homogenous AST? not sure mauybe not
 use std::path::{Path, PathBuf};
 
 use serde::{Deserialize, Serialize};

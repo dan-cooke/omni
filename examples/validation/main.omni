@@ -1,10 +1,18 @@
-@validate(max_length = 20)
-string ShortJoke;
+import { output } from "@omnidl/traits";
 
+@output(format: "json")
 struct Joke {
+	@validate(max_length = 20)
 	joke: ShortJoke,
+	@httpHeader(name: "cache-key")
+	cacheKey: String,
 }
 
+## This one is not ideal because it adds a runtime
+---
+
+
+---
 operation GetRandomJoke {
 	output: Joke
 }

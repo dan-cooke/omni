@@ -7,3 +7,4 @@ edition = "2021"
 
 [dependencies]
 omni_parser= { path = "../omni_parser", version = "0.1.0" }
+omni_codegen= { path = "../omni_codegen", version = "0.1.0" }
